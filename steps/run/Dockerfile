@@ -1,23 +1,23 @@
-FROM puppet/puppet-bolt:latest
-ENV LANG C.UTF-8
+FROM docker.io/relaysh/bolt-step-run
+
 RUN apt-get update && \
-    apt-get install --no-install-recommends -y curl git jq openssh-client wget xz-utils && \
+    apt-get install --no-install-recommends -y unzip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-RUN set -eux ; \
-    mkdir -p /tmp/ni && \
-    cd /tmp/ni && \
-    wget https://packages.nebula.puppet.net/sdk/ni/v1/ni-v1-linux-amd64.tar.xz && \
-    wget https://packages.nebula.puppet.net/sdk/ni/v1/ni-v1-linux-amd64.tar.xz.sha256 && \
-    echo "$( cat ni-v1-linux-amd64.tar.xz.sha256 )  ni-v1-linux-amd64.tar.xz" | sha256sum -c - && \
-    tar -xvJf ni-v1-linux-amd64.tar.xz && \
-    mv ni-v1*-linux-amd64 /usr/local/bin/ni && \
-    cd - && \
-    rm -fr /tmp/ni
-COPY ./step.sh /relay/step.sh
-ENTRYPOINT []
-CMD ["/bin/bash", "/relay/step.sh"]
 
-LABEL "org.opencontainers.image.title"="Run a Bolt task or plan"
-LABEL "org.opencontainers.image.description"="This step container runs a Bolt task or plan against a set of given nodes or inventory data."
-LABEL "com.puppet.nebula.sdk.version"="v1"
+# AWS cli
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && ./aws/install && rm awscliv2.zip
+
+# Packer
+RUN curl "https://releases.hashicorp.com/packer/1.7.8/packer_1.7.8_linux_amd64.zip" -o "packer.zip" && \
+    unzip packer.zip && mv packer /usr/local/bin/packer && rm packer.zip
+
+# kubectl
+RUN curl -LO "https://dl.k8s.io/release/v1.22.0/bin/linux/amd64/kubectl" && \
+    chmod +x kubectl && mv kubectl /usr/local/bin/kubectl
+
+# kOps
+RUN curl -L "https://github.com/kubernetes/kops/releases/download/v1.22.2/kops-linux-amd64" -o "kops" && \
+    chmod +x kops && mv kops /usr/local/bin/kops
+

@@ -5,7 +5,7 @@ apiVersion: integration/v1
 kind: Integration
 
 # The integration slug. Required.
-name: bolt
+name: gm-bolt
 
 # The release channel for this integration. One of alpha, beta, rc or stable.
 # Optional. Defaults to stable.
@@ -18,11 +18,11 @@ channel: stable
 #
 # As a convenience, this information may come from another text file or from a
 # Git tag (if applicable). We may add additional sources in the future.
-version: v20200408
+version: v20211123
 
 # The shortest possible accurate description of this integration. Required. May
 # just be the name of the service.
-summary: Bolt
+summary: "Bolt (w/ extras)"
 
 # A paragraph or two describing what this integration does. Optional. Markdown.
 description: |
@@ -36,16 +36,17 @@ license: Apache-2.0
 # Owner of this integration. Required, but may be optional in the future if it
 # can be inferred from the provider of the integration.
 owner:
-  name: Puppet, Inc.
-  email: relay@puppet.com
-  url: https://puppet.com
+  name: Grey Matter
+  email: coleman.mcfarland@greymatter.io
+  url: https://greymatter.io
 
 # URL to this integration's Website. Optional.
-homepage: https://github.com/relay-integrations/relay-bolt
+homepage: https://github.com/greymatter-io/relay-bolt
 
 # URL to this integration's source code. Optional. If the homepage is a GitHub
 # link, may be inferred automatically.
-source: git://github.com/relay-integrations/relay-bolt.git
+source: git://github.com/greymatter-io/relay-bolt.git
 
 tags:
   - configuration
+  - remote execution

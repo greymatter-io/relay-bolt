@@ -1,3 +1,4 @@
+# described here: https://github.com/puppetlabs/relay-rfcs/blob/main/content/0006-integration-layout/rfc.md
 apiVersion: integration/v1
 kind: Step
 name: run
@@ -8,8 +9,8 @@ icon:
 build:
   apiVersion: build/v1
   kind: Docker
-publish:
-  repository: relaysh/bolt-step-run
+    #publish:
+    #  repository: relaysh/bolt-step-run
 schemas:
   outputs:
     source: file
